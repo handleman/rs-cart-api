@@ -1,15 +1,21 @@
 # Base
-FROM node:12
+FROM node:12-alpine AS BUILD_IMAGE
 
 WORKDIR /app
 
 # Dependencies
 COPY package*.json ./
-RUN npm install
+RUN npm ci 
 
 # Build
 COPY . .
 RUN npm run build
+
+FROM node:12-alpine
+
+WORKDIR /app
+# copy only dist folder from build image
+COPY --from=BUILD_IMAGE /app/dist ./dist
 
 # Application
 USER node
