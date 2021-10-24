@@ -8,3 +8,4 @@ test
 nest-cli.json
 README.md
 .vscode
+.elasticbeanstalk
